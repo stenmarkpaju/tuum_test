@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.diffplug.gradle.spotless' version '3.26.1'
     id 'java'
 }
 
@@ -23,10 +24,26 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis:mybatis-spring:2.0.7'
     implementation 'org.liquibase:liquibase-core'
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
+
     compileOnly 'org.projectlombok:lombok'
+
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+apply plugin: 'com.diffplug.gradle.spotless'
+spotless {
+    java {
+        target project.fileTree(dir: 'src', include: '**/*.java')
+        googleJavaFormat("1.7").aosp()
+        trimTrailingWhitespace()
+        removeUnusedImports()
+        replaceRegex 'Remove empty lines before end of block', '\\n[\\n]+(\\s*})(?=\\n)', '\n$1'
+        replaceRegex 'Remove trailing empty comment lines.', '\n\\s*\\*(\n\\s*\\*/\n)', '$1'
+    }
 }
 
 tasks.named('test') {

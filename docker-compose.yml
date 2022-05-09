@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  tuum_test:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-tuum_test:5432/tuum_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: tuum
+    networks:
+      - tuum_test-network
+    depends_on:
+      - db-tuum_test
+  db-tuum_test:
+    image: postgres
+    networks:
+      - tuum_test-network
+    restart: always
+    command: ["postgres", "-c", "log_statement=all"]
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: tuum
+      POSTGRES_DB: tuum_db
+networks:
+  tuum_test-network:

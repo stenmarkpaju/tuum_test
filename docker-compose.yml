@@ -10,6 +10,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-tuum_test:5432/tuum_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: tuum
+      SPRING_JPA_SHOW-SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      LOGGING_LEVEL_ROOT: "INFO"
     networks:
       - tuum_test-network
     depends_on:

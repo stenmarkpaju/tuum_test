@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet  id="2022-05-09.1"  author="sten-mark.p">
+        <sql>
+            create extension if not exists "uuid-ossp";
+
+            CREATE TABLE IF NOT EXISTS account (
+                account_id uuid default uuid_generate_v4() not null
+                    constraint account_pkey
+                    primary key,
+                customer_id varchar(10) not null
+                    constraint customer_id_uq
+                        unique,
+                available_funds numeric(10, 2),
+                currency varchar(3)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

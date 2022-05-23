@@ -27,4 +27,24 @@
         </sql>
     </changeSet>
 
+    <changeSet  id="2022-05-21.1"  author="sten-mark.p">
+        <sql>
+            create extension if not exists "uuid-ossp";
+
+            CREATE TABLE IF NOT EXISTS transaction (
+                account_id uuid not null,
+                transaction_id uuid default uuid_generate_v4() not null
+                    constraint transaction_pkey
+                        primary key,
+                amount numeric(10, 2) not null,
+                currency varchar(3) not null,
+                transaction_direction varchar(3) not null,
+                description varchar(255) not null,
+
+                constraint account_id_fk foreign key(account_id)
+                    references account(account_id)
+                );
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

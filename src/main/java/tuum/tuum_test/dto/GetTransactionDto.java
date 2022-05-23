@@ -1,17 +1,14 @@
-package tuum.tuum_test.persistence.model;
+package tuum.tuum_test.dto;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import tuum.tuum_test.persistence.model.Currency;
+import tuum.tuum_test.persistence.model.TransactionDirection;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Transaction {
-    private UUID accountId;
+public class GetTransactionDto {
     private UUID transactionId;
     private Double amount;
     private Currency currency;

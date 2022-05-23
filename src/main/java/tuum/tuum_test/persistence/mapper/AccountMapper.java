@@ -32,24 +32,23 @@ public interface AccountMapper {
     @Select("SELECT account_id, customer_id FROM account a where a.account_id = #{accountId}")
     @Results(
             value = {
-                    @Result(column = "account_id", property = "accountId"),
-                    @Result(column = "customer_id", property = "customerId"),
-                    @Result(
-                            property = "balance",
-                            column = "account_id",
-                            javaType = List.class,
-                            many = @Many(select = "getAllBalances"))
+                @Result(column = "account_id", property = "accountId"),
+                @Result(column = "customer_id", property = "customerId"),
+                @Result(
+                        property = "balance",
+                        column = "account_id",
+                        javaType = List.class,
+                        many = @Many(select = "getAllBalances"))
             })
     Account findAccountByAccountId(@Param("accountId") UUID accountId);
 
+    @Insert(
+            "INSERT INTO account(account_id, customer_id, country) "
+                    + " VALUES (#{accountId}, #{customerId}, #{country})")
+    void insertAccount(Account account);
 
-        @Insert(
-                "INSERT INTO account(account_id, customer_id, country) "
-                        + " VALUES (#{accountId}, #{customerId}, #{country})")
-        void insertAccount(Account account);
-
-        @Insert(
-                "INSERT INTO balance(account_id, available_funds, currency) "
-                        + " VALUES (#{accountId}, #{balance.availableFunds}, #{balance.currency})")
-        void insertBalance(UUID accountId, Balance balance);
+    @Insert(
+            "INSERT INTO balance(account_id, available_funds, currency) "
+                    + " VALUES (#{accountId}, #{balance.availableFunds}, #{balance.currency})")
+    void insertBalance(UUID accountId, Balance balance);
 }

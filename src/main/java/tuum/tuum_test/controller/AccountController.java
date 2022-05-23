@@ -2,7 +2,6 @@ package tuum.tuum_test.controller;
 
 import java.util.List;
 import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,8 @@ public class AccountController {
     }
 
     @GetMapping("/{accountId}")
-    public ResponseEntity<GetAccountDto> getAccountById(@PathVariable("accountId") String accountId) throws Exception {
+    public ResponseEntity<GetAccountDto> getAccountById(@PathVariable("accountId") String accountId)
+            throws Exception {
         UUID id = UUID.fromString(accountId);
         Account account = accountService.findAccountById(id);
         GetAccountDto accountDto = accountMapHelper.mapToGetAccountDto(account);
@@ -37,7 +37,7 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<Account> addAccount(@RequestBody CreateAccountDto accountDto) {
-         Account createdAccount = accountService.createAccount(accountDto);
-         return ResponseEntity.ok(createdAccount);
+        Account createdAccount = accountService.createAccount(accountDto);
+        return ResponseEntity.ok(createdAccount);
     }
 }

@@ -10,3 +10,4 @@
 
 - Has no tests yet
 - Has no transaction implementation yet
+- Has no exceptions/errors implemented yet

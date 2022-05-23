@@ -42,14 +42,14 @@ public interface AccountMapper {
             })
     Account findAccountByAccountId(@Param("accountId") UUID accountId);
 
-    //
-    //    @Insert(
-    //            "INSERT INTO account(account_id, customer_id, country) "
-    //                    + " VALUES (#{accountId}, #{customerId}, #{country})")
-    //    public void insertAccount(Account account);
-    //
-    //    @Insert(
-    //            "INSERT INTO balance(account_id, balance_id, available_funds, currency "
-    //                    + " VALUES (#{accountId}, #{balanceId}, #{availableFunds}, #{currency})")
-    //    public void insertBalance(Balance balance);
+
+        @Insert(
+                "INSERT INTO account(account_id, customer_id, country) "
+                        + " VALUES (#{accountId}, #{customerId}, #{country})")
+        void insertAccount(Account account);
+
+        @Insert(
+                "INSERT INTO balance(account_id, available_funds, currency) "
+                        + " VALUES (#{accountId}, #{balance.availableFunds}, #{balance.currency})")
+        void insertBalance(UUID accountId, Balance balance);
 }

@@ -28,7 +28,7 @@ public class AccountController {
     }
 
     @GetMapping("/{accountId}")
-    public ResponseEntity<GetAccountDto> getAccountById(@PathVariable("accountId") String accountId) {
+    public ResponseEntity<GetAccountDto> getAccountById(@PathVariable("accountId") String accountId) throws Exception {
         UUID id = UUID.fromString(accountId);
         Account account = accountService.findAccountById(id);
         GetAccountDto accountDto = accountMapHelper.mapToGetAccountDto(account);
@@ -37,8 +37,7 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<Account> addAccount(@RequestBody CreateAccountDto accountDto) {
-        // Account createdAccount = accountService.createAccount(accountDto);
-        // return ResponseEntity.ok(createdAccount);
-        return null;
+         Account createdAccount = accountService.createAccount(accountDto);
+         return ResponseEntity.ok(createdAccount);
     }
 }

@@ -8,6 +8,7 @@ import tuum.tuum_test.dto.CreateAccountDto;
 import tuum.tuum_test.dto.GetAccountDto;
 import tuum.tuum_test.persistence.model.Account;
 import tuum.tuum_test.persistence.model.Balance;
+import tuum.tuum_test.persistence.model.Currency;
 
 @Component
 public class AccountMapHelper {

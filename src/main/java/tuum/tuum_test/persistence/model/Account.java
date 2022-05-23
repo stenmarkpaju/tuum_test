@@ -1,16 +1,17 @@
 package tuum.tuum_test.persistence.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Account {
     private UUID accountId;
     private String customerId;
-    private Double availableFunds;
-    private Currency currency;
+    private String country;
+    @Builder.Default private List<Balance> balance = new ArrayList<>();
 }

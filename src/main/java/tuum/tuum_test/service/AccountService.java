@@ -1,6 +1,8 @@
 package tuum.tuum_test.service;
 
 import java.util.List;
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +19,13 @@ public class AccountService {
 
     @Autowired private AccountMapper accountMapper;
 
-    public List<Account> findAllChargers() {
+    public List<Account> findAllAccounts() {
 
         return accountMapper.findAll();
+    }
+
+    public Account findAccountById(UUID accountId) {
+        return accountMapper.findAccountByAccountId(accountId);
     }
 
     //

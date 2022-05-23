@@ -1,6 +1,8 @@
 package tuum.tuum_test.controller;
 
 import java.util.List;
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,17 @@ public class AccountController {
 
     @GetMapping
     public ResponseEntity<List<GetAccountDto>> getAccounts() {
-        List<Account> accounts = accountService.findAllChargers();
+        List<Account> accounts = accountService.findAllAccounts();
         List<GetAccountDto> accountsDto = accountMapHelper.mapToGetAccountDtos(accounts);
         return ResponseEntity.ok(accountsDto);
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<GetAccountDto> getAccountById(@PathVariable("accountId") String accountId) {
+        UUID id = UUID.fromString(accountId);
+        Account account = accountService.findAccountById(id);
+        GetAccountDto accountDto = accountMapHelper.mapToGetAccountDto(account);
+        return ResponseEntity.ok(accountDto);
     }
 
     @PostMapping

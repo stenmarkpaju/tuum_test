@@ -8,6 +8,7 @@ import tuum.tuum_test.dto.CreateAccountDto;
 import tuum.tuum_test.dto.GetAccountDto;
 import tuum.tuum_test.persistence.model.Account;
 import tuum.tuum_test.persistence.model.Balance;
+import tuum.tuum_test.persistence.model.Currency;
 
 @Component
 public class AccountMapHelper {
@@ -42,7 +43,7 @@ public class AccountMapHelper {
     public Balance mapToBalance(CreateAccountDto createAccountDto, int iterable) {
         return Balance.builder()
                 .availableFunds(0.0)
-                .currency(createAccountDto.getCurrency().get(iterable))
+                .currency(Currency.valueOf(createAccountDto.getCurrency().get(iterable)))
                 .build();
     }
 }

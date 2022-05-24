@@ -47,4 +47,11 @@
         </sql>
     </changeSet>
 
+    <changeSet  id="2022-05-24.1"  author="sten-mark.p">
+        <sql>
+            CREATE UNIQUE INDEX account_id_currency_uniq
+                ON balance(account_id, currency);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

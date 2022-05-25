@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class CreateAccountDto {
     private String customerId;
-    private String Country;
+    private String country;
     private List<String> currency;
 }

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tuum.tuum_test.dto.CreateAccountDto;
+import tuum.tuum_test.exception.AccountNotFoundException;
 import tuum.tuum_test.exception.IncorrectCurrencyException;
 import tuum.tuum_test.maphelper.AccountMapHelper;
 import tuum.tuum_test.persistence.mapper.AccountMapper;
@@ -34,7 +35,7 @@ public class AccountService {
         Account account = accountMapper.findAccountByAccountId(accountId);
 
         if (account == null) {
-            throw new Exception("Account not found with id " + accountId);
+            throw new AccountNotFoundException("Account not found with id " + accountId);
         }
 
         return accountMapper.findAccountByAccountId(accountId);

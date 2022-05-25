@@ -49,10 +49,10 @@ public interface AccountMapper {
     @Insert(
             "INSERT INTO account(account_id, customer_id, country) "
                     + " VALUES (#{accountId}, #{customerId}, #{country})")
-    void insertAccount(Account account);
+    int insertAccount(Account account);
 
     @Insert(
             "INSERT INTO balance(account_id, available_funds, currency) "
                     + " VALUES (#{accountId}, #{balance.availableFunds}, #{balance.currency})")
-    void insertBalance(UUID accountId, Balance balance);
+    int insertBalance(UUID accountId, Balance balance);
 }

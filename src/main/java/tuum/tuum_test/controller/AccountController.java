@@ -46,6 +46,7 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<Account> addAccount(@RequestBody CreateAccountDto accountDto)
             throws IncorrectCurrencyException {
+
         Account createdAccount = accountService.createAccount(accountDto);
         return ResponseEntity.ok(createdAccount);
     }

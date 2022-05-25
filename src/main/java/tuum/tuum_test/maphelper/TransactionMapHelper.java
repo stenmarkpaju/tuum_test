@@ -30,7 +30,7 @@ public class TransactionMapHelper {
 
     public Transaction mapToTransaction(CreateTransactionDto createTransactionDto) {
         return Transaction.builder()
-                .accountId(UUID.fromString(createTransactionDto.getAccountId()))
+                .accountId(createTransactionDto.getAccountId())
                 .transactionId(UUID.randomUUID())
                 .amount(createTransactionDto.getAmount())
                 .currency(createTransactionDto.getCurrency())

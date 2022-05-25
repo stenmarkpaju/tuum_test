@@ -29,9 +29,7 @@ dependencies {
     implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'net.bytebuddy:byte-buddy:1.12.10'
-
-
-
+    implementation 'org.postgresql:postgresql:42.3.5'
 
 
     compileOnly 'org.projectlombok:lombok'
@@ -47,8 +45,25 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'org.junit.platform:junit-platform-runner:1.9.0-M1'
     testImplementation 'com.shazam:shazamcrest:0.11'
+}
 
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output
+            compileClasspath += main.compileClasspath
 
+            compileClasspath += test.output
+            compileClasspath += test.compileClasspath
+
+            runtimeClasspath += test.runtimeClasspath
+        }
+    }
+}
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+    integrationTestImplementation.extendsFrom testImplementation
 }
 
 apply plugin: 'com.diffplug.gradle.spotless'
@@ -63,7 +78,14 @@ spotless {
     }
 }
 
+task integrationTest(type: Test) {
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+//    mustRunAfter test
+}
+
 test {
     useJUnitPlatform()
 }
-

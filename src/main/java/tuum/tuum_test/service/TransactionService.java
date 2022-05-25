@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 import tuum.tuum_test.dto.CreateTransactionDto;
 import tuum.tuum_test.dto.CreatedTransactionDto;
 import tuum.tuum_test.exception.*;
@@ -28,25 +27,28 @@ public class TransactionService {
 
     @Autowired TransactionMapHelper transactionMapHelper;
 
-    public List<Transaction> findTransactionsByAccountId(UUID accountId) {
+    public List<Transaction> findTransactionsByAccountId(UUID accountId)
+            throws TransactionNotFoundException {
+
         return Optional.ofNullable(transactionMapper.findTransactionsByAccountId(accountId))
                 .orElseThrow(
                         () ->
-                                new NotFoundException(
+                                new TransactionNotFoundException(
                                         "No transactions found for account " + accountId));
     }
 
     public CreatedTransactionDto createTransaction(CreateTransactionDto createTransaction)
             throws InsufficientFundsException, AccountNotFoundException,
-                    InvalidMonetaryAmountException, IncorrectCurrencyException,
-                    InvalidDescriptionException {
-        if (createTransaction.getDescription().isEmpty()) {
+                    InvalidMonetaryAmountException, InvalidDescriptionException {
+        if (createTransaction.getDescription() == null
+                || createTransaction.getDescription().isBlank()) {
             throw new InvalidDescriptionException("The description provided by the user is empty");
         }
 
         Transaction transaction = transactionMapHelper.mapToTransaction(createTransaction);
+
         List<Balance> balances =
-                Optional.of(accountMapper.getAllBalances(transaction.getAccountId()))
+                Optional.ofNullable(accountMapper.getAllBalances(transaction.getAccountId()))
                         .orElseThrow(
                                 () ->
                                         new AccountNotFoundException(
@@ -73,12 +75,7 @@ public class TransactionService {
         return EnumUtils.isValidEnumIgnoreCase(Currency.class, currency);
     }
 
-    private Balance findBalanceToUpdateByCurrency(List<Balance> balances, Currency currency)
-            throws IncorrectCurrencyException {
-        if (!isCurrencyOfValidValue(currency.name())) {
-            throw new IncorrectCurrencyException(
-                    "Currency inserted by the user is not valid: " + currency.name());
-        }
+    private Balance findBalanceToUpdateByCurrency(List<Balance> balances, Currency currency) {
 
         return balances.stream()
                 .filter(balance -> currency.equals(balance.getCurrency()))

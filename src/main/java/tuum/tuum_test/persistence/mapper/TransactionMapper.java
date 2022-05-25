@@ -23,5 +23,5 @@ public interface TransactionMapper {
     @Insert(
             "INSERT INTO transaction(account_id, transaction_id, amount, currency, transaction_direction, description) "
                     + " VALUES (#{accountId}, #{transactionId}, #{amount}, #{currency}, #{transactionDirection}, #{description})")
-    void insertTransaction(Transaction transaction);
+    int insertTransaction(Transaction transaction);
 }

@@ -12,8 +12,8 @@
                 account_id uuid default uuid_generate_v4() not null
                     constraint account_pkey
                     primary key,
-                country varchar(20) not null,
-                customer_id varchar(10) not null
+                country varchar(10) not null,
+                customer_id varchar(30) not null
                     constraint customer_id_uq
                         unique
             );

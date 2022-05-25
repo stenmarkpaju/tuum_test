@@ -24,7 +24,8 @@ public class TransactionController {
 
     @GetMapping("/{accountId}")
     public ResponseEntity<List<GetTransactionDto>> getTransactions(
-            @PathVariable("accountId") String accountId) throws AccountNotFoundException {
+            @PathVariable("accountId") String accountId)
+            throws AccountNotFoundException, TransactionNotFoundException {
         UUID id = UUID.fromString(accountId);
         List<Transaction> transactions =
                 Optional.of(transactionService.findTransactionsByAccountId(id))
@@ -42,8 +43,7 @@ public class TransactionController {
     public ResponseEntity<CreatedTransactionDto> createTransaction(
             @RequestBody CreateTransactionDto createTransactionDto)
             throws InsufficientFundsException, AccountNotFoundException,
-                    InvalidMonetaryAmountException, IncorrectCurrencyException,
-                    InvalidDescriptionException {
+                    InvalidMonetaryAmountException, InvalidDescriptionException {
         CreatedTransactionDto transaction =
                 transactionService.createTransaction(createTransactionDto);
         return ResponseEntity.ok(transaction);

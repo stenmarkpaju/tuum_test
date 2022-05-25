@@ -31,7 +31,7 @@ public interface AccountMapper {
 
     @Update(
             "UPDATE balance b SET available_funds=#{balance.availableFunds} WHERE b.account_id=#{accountId} AND b.currency=#{balance.currency}")
-    void updateBalanceByAccountIdAndCurrency(@Param("accountId") UUID accountId, Balance balance);
+    int updateBalanceByAccountIdAndCurrency(@Param("accountId") UUID accountId, Balance balance);
 
     @Select("SELECT account_id, customer_id FROM account a where a.account_id = #{accountId}")
     @Results(

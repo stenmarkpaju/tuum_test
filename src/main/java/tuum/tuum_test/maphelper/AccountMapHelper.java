@@ -43,7 +43,9 @@ public class AccountMapHelper {
     public Balance mapToBalance(CreateAccountDto createAccountDto, int iterable) {
         return Balance.builder()
                 .availableFunds(0.0)
-                .currency(Currency.valueOf(createAccountDto.getCurrency().get(iterable)))
+                .currency(
+                        Currency.valueOf(
+                                createAccountDto.getCurrency().get(iterable).toUpperCase()))
                 .build();
     }
 }

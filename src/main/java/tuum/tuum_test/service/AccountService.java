@@ -48,7 +48,8 @@ public class AccountService {
 
         if (accountDto.getCurrency().size() >= 1) {
             for (int i = 0; i < accountDto.getCurrency().size(); i++) {
-                if (!EnumUtils.isValidEnum(Currency.class, accountDto.getCurrency().get(i))) {
+                if (!EnumUtils.isValidEnumIgnoreCase(
+                        Currency.class, accountDto.getCurrency().get(i))) {
                     throw new IncorrectCurrencyException(
                             "Given currency is not supported " + accountDto.getCurrency().get(i));
                 }
